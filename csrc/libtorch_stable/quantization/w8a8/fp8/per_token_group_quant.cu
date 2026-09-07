@@ -190,6 +190,7 @@ inline int GetGroupsPerBlockX(int64_t padded_groups_per_row) {
   return 4;
 }
 
+#ifndef VLLM_DEVICE_ONLY
 void per_token_group_quant_8bit(const torch::stable::Tensor& input,
                                 torch::stable::Tensor& output_q,
                                 torch::stable::Tensor& output_s,
@@ -285,6 +286,7 @@ void per_token_group_quant_8bit(const torch::stable::Tensor& input,
 #undef LAUNCH_KERNEL
 #undef LAUNCH_KERNEL_INST
 }
+#endif
 
 // Register-resident fast path for group_size==128.
 //
@@ -456,6 +458,7 @@ __global__ void per_token_group_quant_8bit_packed_register_kernel(
 
 // Public entry point: register-resident packed quant kernel.
 // Constraints: group_size == 128 and bf16/fp16 input.
+#ifndef VLLM_DEVICE_ONLY
 void per_token_group_quant_8bit_packed(const torch::stable::Tensor& input,
                                        torch::stable::Tensor& output_q,
                                        torch::stable::Tensor& output_s_packed,
@@ -620,3 +623,4 @@ void per_token_group_quant_fp8(const torch::stable::Tensor& input,
   per_token_group_quant_8bit(input, output_q, output_s, group_size, eps,
                              fp8_min, fp8_max, scale_ue8m0);
 }
+#endif

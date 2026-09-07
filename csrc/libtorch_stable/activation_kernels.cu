@@ -236,6 +236,7 @@ packed_gelu_tanh_kernel(const packed_t& val, const float /*alpha*/) {
 
 }  // namespace vllm
 
+#ifndef VLLM_DEVICE_ONLY
 // Launch activation and gating kernel.
 // Use ACT_FIRST (bool) indicating whether to apply the activation function
 // first. HAS_CLAMP (bool) enables pre-activation clamping: gate input is
@@ -1449,3 +1450,4 @@ void relu_squared(torch::stable::Tensor& out,    // [..., d]
 {
   LAUNCH_ACTIVATION_KERNEL(vllm::relu_squared_kernel);
 }
+#endif

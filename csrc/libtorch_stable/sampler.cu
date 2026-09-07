@@ -671,6 +671,7 @@ __launch_bounds__(kNumThreadsPerBlock) void topKPerRowDecodeDeviceLengthAware(
 
 }  // namespace vllm
 
+#ifndef VLLM_DEVICE_ONLY
 void apply_repetition_penalties_(
     torch::stable::Tensor& logits,  // [num_seqs, vocab_size], in-place
     const torch::stable::Tensor& prompt_mask,  // [num_seqs, vocab_size]
@@ -875,3 +876,4 @@ void top_k_per_row_prefill(const torch::stable::Tensor& logits,
             static_cast<int>(topK), kSortingAlgorithmThreshold);
   }
 }
+#endif

@@ -218,6 +218,7 @@ fused_add_rms_norm_kernel(
 
 }  // namespace vllm
 
+#ifndef VLLM_DEVICE_ONLY
 void rms_norm(torch::stable::Tensor& out,    // [..., hidden_size]
               torch::stable::Tensor& input,  // [..., hidden_size]
               std::optional<torch::stable::Tensor> weight, double epsilon) {
@@ -371,3 +372,4 @@ void fused_add_rms_norm(torch::stable::Tensor& input,     // [..., hidden_size]
     }
   }
 }
+#endif

@@ -751,6 +751,7 @@ void topkGatingKernelLauncher(
 } // namespace vllm
 
 
+#ifndef VLLM_DEVICE_ONLY
 template<typename ComputeType, vllm::moe::ScoringFunc SF>
 void dispatch_topk_launch(
     torch::stable::Tensor& gating_output,
@@ -899,3 +900,4 @@ void topk_sigmoid(
         STD_TORCH_CHECK(false, "Unsupported gating_output data type: ", gating_output.scalar_type());
     }
 }
+#endif

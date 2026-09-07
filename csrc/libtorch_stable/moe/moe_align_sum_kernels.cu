@@ -624,6 +624,7 @@ __global__ void moe_lora_align_block_size_small_batch_expert_kernel(
 
 // taken from
 // https://github.com/sgl-project/sglang/blob/8b5f83ed3b7d2a49ad5c5cd5aa61c5d502f47dbc
+#ifndef VLLM_DEVICE_ONLY
 void moe_align_block_size(
     torch::stable::Tensor topk_ids, int64_t num_experts, int64_t block_size,
     torch::stable::Tensor sorted_token_ids, torch::stable::Tensor experts_ids,
@@ -1089,3 +1090,4 @@ void moe_lora_align_block_size(
         }
       });
 }
+#endif

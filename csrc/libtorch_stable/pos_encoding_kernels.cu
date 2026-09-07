@@ -100,6 +100,7 @@ __global__ void rotary_embedding_kernel(
 
 }  // namespace vllm
 
+#ifndef VLLM_DEVICE_ONLY
 void rotary_embedding(
     torch::stable::Tensor& positions,  // [batch_size, seq_len] or [num_tokens]
     torch::stable::Tensor&
@@ -199,3 +200,4 @@ void rotary_embedding(
             });
       });
 }
+#endif
